@@ -3,6 +3,10 @@ body {
     height: 100%;
 }
 
+a {
+    cursor: pointer!important;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;
@@ -119,4 +123,25 @@ a.desc:after {
 
 .nav>li>form>button.logout:focus {
     outline: none;
+}
+
+#registration-form {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    height: 100px;
+}
+
+.form-group {
+    margin: 10px;
+}
+
+.editbtn {
+    margin: 10px;
+    color: #337ab7;
+    cursor: pointer;
+}
+
+th {
+    position: relative;
 }
