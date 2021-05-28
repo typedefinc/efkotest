@@ -79,17 +79,30 @@ class SiteController extends Controller
         if($model->load(\Yii::$app->request->post()) && $model->validate()){
             $list = new Listing();
             $list->user = User::findOne(Yii::$app->user->id)->username;
-            $list->start = $model->start;
-            $list->end = $model->end;
+            $list->start = date('d.m.Y', strtotime($model->start));
+            $list->end = date('d.m.Y', strtotime($model->end));;
             $list->locking = false;
             if($list->save()){
-                return $this->redirect(['site/index']);
             }
         }
+        $model2 = new UpdateForm();
+        if (Yii::$app->request->isAjax && $model2->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model2);
+        }
+        if($model2->load(\Yii::$app->request->post()) && $model2->validate()){
+           $upList = Listing::findOne($model2->id);
+           $upList->start = date('d.m.Y', strtotime($model2->start));
+           $upList->end = date('d.m.Y', strtotime($model2->end));;
+           if($upList->update()){
+            Yii::$app->session->setFlash('success', "Update succes.");  
+        }
+        }
+
         $listing = Listing::find()->all();
         $isAdmin = User::findOne(\Yii::$app->user->id)->role=='admin';
         $getName = User::findOne(\Yii::$app->user->id)->username;
-        return $this->render('index', compact('model','listing','isAdmin','getName'));  
+        return $this->render('index', compact('model','model2','listing','isAdmin','getName'));  
     }
 
     /**
@@ -123,15 +136,22 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect(['site/login']);
     }
 
     public function actionSignup(){
         $model = new SignupForm();
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         if($model->load(\Yii::$app->request->post()) && $model->validate()){
             $user = new User();
             $user->username = $model->username;
             $user->password = \Yii::$app->security->generatePasswordHash($model->password);
+            if(!empty($model->adminPass)){
+                $user->role = 'admin';
+            }
             if($user->save()){
                 return $this->redirect(['site/login']);
             }
@@ -143,12 +163,12 @@ class SiteController extends Controller
         $l = Listing::findOne($id);
         $l->locking = !$l->locking;
         if($l->update()){
-            return $this->redirect(['site/index']);
+            return $this->goHome();
         }
     }
     public function actionDelete($id){
         Listing::findOne($id)->delete();
-        return $this->redirect(['site/index']);
+        return $this->goHome();
     }
 
 }

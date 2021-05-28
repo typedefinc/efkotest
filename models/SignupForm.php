@@ -7,10 +7,13 @@ class SignupForm extends Model{
     
     public $username;
     public $password;
+    public $admin = false;
+    public $adminPass;
     
     public function rules() {
         return [
-            [['username', 'password'], 'required'],
+            [['username', 'password','admin'], 'required'],
+            ['adminPass','validateAdminPassword'],
         ];
     }
     
@@ -20,5 +23,10 @@ class SignupForm extends Model{
             'password' => 'Password',
         ];
     }
-    
+    public function validateAdminPassword($attribute)
+    {
+            if ($this->adminPass!='SSXdqV0b1U') {
+                $this->addError($attribute, 'Incorrect admin password.');
+            }
+    }
 }

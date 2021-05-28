@@ -66,4 +66,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     {
         return \Yii::$app->security->validatePassword($password, $this->password);
     }
+    public function validateAdminPassword($password)
+    {
+        return $password == '123456789';
+    }
 }

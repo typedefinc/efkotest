@@ -3,22 +3,21 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Posts';
+
+$this->title = 'List Vacation';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-    <h1>
+    <h1 class="col-md-9">
         <?= Html::encode($this->title) ?>
     </h1>
-    <?php if( Yii::$app->session->hasFlash('error') ): ?>
-    <div class="alert alert-error alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <?php echo Yii::$app->session->getFlash('error'); ?>
-    </div>
-    <?php endif;?>
-  
+
 <?php $form = ActiveForm::begin([
     'id' => 'registration-form',
-    'enableAjaxValidation' => true
+    'enableAjaxValidation' => true,
+    'options'=>[
+        'class'=>'col-md-9'
+    ],
+
 ]) ?>
     <?= $form->field($model, 'start')->textInput(['type'=>'date'])?>
         <?= $form->field($model, 'end')->textInput(['type'=>'date'])?>
@@ -29,7 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?php ActiveForm::end();?>
 
-
+            <h3 class='col-md-3  text-right'>
+         Role: <?= $isAdmin?'Admin':'User'?>
+    </h3>
 <table class="table">
     <thead>
         <th>User</th>
@@ -53,9 +54,9 @@ $this->params['breadcrumbs'][] = $this->title;
                echo $list->locking?'Lock':'Unlock';
             }
             ?></th>
-            <th style='width:90px'>
+            <th style='width:90px;padding:0'>
             <?php if($getName==$list->user && !$list->locking){
-                echo '<span class="glyphicon glyphicon-edit editbtn editor"></span>';
+                echo '<span data-id="'.$list->id.'" class="glyphicon glyphicon-edit editbtn editor"></span>';
                 echo Html::a('<span class="glyphicon glyphicon-remove editbtn"></span>', ['site/delete','id' => ($list->id)]);
             }
             ?>
@@ -64,3 +65,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ?>
         </tbody>
 </table>
+
+<div class="backModal" style='display:none'>
+    <div class='modalForm'>
+        <?php $form = ActiveForm::begin([
+            'id' => 'update-form',
+            'enableAjaxValidation' => true
+        ]) ?>
+            <?= $form->field($model2, 'id')->hiddenInput() ?>
+            <?= $form->field($model2, 'start')->textInput(['type'=>'date'])?>
+            <?= $form->field($model2, 'end')->textInput(['type'=>'date'])?>
+            <div class="form-group">
+                <div>
+                    <?= Html::submitButton('Update', ['class' => 'btn btn-success']) ?>
+                </div>
+            </div>
+        <?php ActiveForm::end();?>
+        <span class="glyphicon glyphicon-remove close"></span>
+    </div>
+</div>
