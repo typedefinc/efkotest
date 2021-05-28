@@ -14,6 +14,7 @@ class SignupForm extends Model{
         return [
             [['username', 'password','admin'], 'required'],
             ['adminPass','validateAdminPassword'],
+            ['username','validateUsername'],
         ];
     }
     
@@ -28,5 +29,11 @@ class SignupForm extends Model{
             if ($this->adminPass!='SSXdqV0b1U') {
                 $this->addError($attribute, 'Incorrect admin password.');
             }
+    }
+    public function validateUsername($attribute)
+    {
+        if(User::find()->where(['username'=>$this->username])->all()){
+            $this->addError($attribute, 'This name is already taken');
+        }     
     }
 }

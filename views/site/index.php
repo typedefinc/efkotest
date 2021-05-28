@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </h1>
 
 <?php $form = ActiveForm::begin([
-    'id' => 'registration-form',
+    'id' => 'add-form',
     'enableAjaxValidation' => true,
     'options'=>[
         'class'=>'col-md-9'
