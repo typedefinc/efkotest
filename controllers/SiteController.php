@@ -67,7 +67,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->user->isGuest){
-            Yii::$app->session->setFlash('error', "You need to login or register");
+            Yii::$app->session->setFlash('error', "Вам нужно войти или зарегистрироваться");
             return $this->redirect(['site/login']); 
         }
         
@@ -83,7 +83,7 @@ class SiteController extends Controller
             $list->end = date('d.m.Y', strtotime($model->end));;
             $list->locking = false;
             if($list->save()){
-                Yii::$app->session->setFlash('success', "Add success.");  
+                Yii::$app->session->setFlash('success', "Успешно добавлено");  
                 return $this->goHome();
             }
         }
@@ -97,7 +97,7 @@ class SiteController extends Controller
            $upList->start = date('d.m.Y', strtotime($model2->start));
            $upList->end = date('d.m.Y', strtotime($model2->end));;
            if($upList->update()){
-            Yii::$app->session->setFlash('success', "Update success.");  
+            Yii::$app->session->setFlash('success', "Успешно изменено");  
             return $this->goHome();
         }
         }

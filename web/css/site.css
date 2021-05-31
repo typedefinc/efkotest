@@ -171,6 +171,11 @@ th {
     right: 10px;
 }
 
+.modalForm .form-group {
+    display: block;
+    width: 100%;
+}
+
 .form-group {
     display: flex;
     align-items: center;
@@ -178,4 +183,12 @@ th {
 
 .control-label {
     margin-right: 10px;
+}
+
+#update-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }

@@ -20,22 +20,22 @@ class RecordForm extends Model{
     
     public function attributeLabels() {
         return [
-            'start' => 'Start',
-            'end' => 'End',
+            'start' => 'Начало',
+            'end' => 'Конец',
         ];
     }
     public function startDate($attribute) {
         $start=strtotime($this->$attribute);
         $now=strtotime(date('d.m.Y 00:00:00',time()));
         if ($start < $now){
-            $this->addError($attribute,  'Start date cannot be less than current');
+            $this->addError($attribute,  'Начальная дата не может быть меньше текущей.');
         }
     }
     public function endDate($attribute) {
         $end=strtotime($this->end);
         $start=strtotime($this->start);
         if ($end < $start){
-            $this->addError($attribute,  'End date cannot be less than start date');
+            $this->addError($attribute,  'Конечная дата не может быть меньше начальной.');
         }
     }
 }

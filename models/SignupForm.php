@@ -27,13 +27,13 @@ class SignupForm extends Model{
     public function validateAdminPassword($attribute)
     {
             if ($this->adminPass!='SSXdqV0b1U') {
-                $this->addError($attribute, 'Incorrect admin password.');
+                $this->addError($attribute, 'Неккоректный логин или пароль.');
             }
     }
     public function validateUsername($attribute)
     {
         if(User::find()->where(['username'=>$this->username])->all()){
-            $this->addError($attribute, 'This name is already taken');
+            $this->addError($attribute, 'Это имя уже существует.');
         }     
     }
 }

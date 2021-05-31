@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 
-$this->title = 'List Vacation';
+$this->title = 'Список отпусков';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
     <h1 class="col-md-9">
@@ -23,20 +23,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'end')->textInput(['type'=>'date'])?>
             <div class="form-group">
                 <div>
-                    <?= Html::submitButton('Add', ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
                 </div>
             </div>
             <?php ActiveForm::end();?>
 
             <h3 class='col-md-3  text-right'>
-         Role: <?= $isAdmin?'Admin':'User'?>
+         Роль: <?= $isAdmin?'Админ':'Сотрудник'?>
     </h3>
 <table class="table">
     <thead>
-        <th>User</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Checked</th>
+        <th>Сотрудник</th>
+        <th>Начало</th>
+        <th>Конец</th>
+        <th>Статус</th>
         <th></th>
     </thead>
         <tbody>
@@ -49,9 +49,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <th><?=$list->end;?></th>
             <th><?php
             if($isAdmin){
-               echo Html::a($list->locking?'Lock':'Unlock', ['site/edit','id' => ($list->id)]);
+               echo Html::a($list->locking?'Утвержден':'Не утвержден', ['site/edit','id' => ($list->id)]);
             }else{
-               echo $list->locking?'Lock':'Unlock';
+               echo $list->locking?'Утвержден':'Не утвержден';
             }
             ?></th>
             <th style='width:90px;padding:0'>
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model2, 'end')->textInput(['type'=>'date'])?>
             <div class="form-group">
                 <div>
-                    <?= Html::submitButton('Update', ['class' => 'btn btn-success']) ?>
+                    <?= Html::submitButton('Обновить', ['class' => 'btn btn-success']) ?>
                 </div>
             </div>
         <?php ActiveForm::end();?>
